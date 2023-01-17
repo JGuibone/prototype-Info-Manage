@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:prototype_Info_Manage"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="MainWindow" Height="450" Width="315">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,6 +27,6 @@
         <TextBlock x:Name="txtB_studentFName" TextWrapping="NoWrap" Text="StudenFname" TextAlignment="Center" FontSize="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <TextBlock x:Name="txtB_studentLName" TextWrapping="NoWrap" TextAlignment="Center" FontSize="16" Text="Student Lname" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock x:Name="txtB_studentCourse" TextWrapping="NoWrap" Width="150" Height="20" TextAlignment="Center" FontSize="16" Text="Student Course" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Image x:Name="Settings" Source="/Assets/Images/Gear-Option.png" MouseLeftButtonDown="OnClick" Grid.Column="2" Grid.Row="5"/>
+        <Image x:Name="Settings" Source="/clipart2052972.png" MouseLeftButtonDown="OnClick" Grid.Column="2" Grid.Row="5"/>
     </Grid>
 </Window>

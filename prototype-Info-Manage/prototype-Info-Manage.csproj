@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="clipart2052972.png" />
     <None Remove="Gear-Option.png" />
     <None Remove="images.jpg" />
   </ItemGroup>
@@ -19,7 +20,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\Images\images.jpg" />
+    <Resource Include="clipart2052972.png" />
     <Resource Include="Gear-Option.png" />
+    <Resource Include="images.jpg" />
   </ItemGroup>
 
 </Project>

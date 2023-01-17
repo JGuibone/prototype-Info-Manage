@@ -13,13 +13,13 @@ namespace prototype_Info_Manage
     class DBTest
     {
 		private const string myConnectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=info_management;";
+		MySqlConnection conn = new()
+		{
+			ConnectionString = myConnectionString
+		};
 		public List<string> ID_Check(string ID_barcode)
 		{
 			List<string> rowList = new List<string>();
-			MySqlConnection conn = new MySqlConnection()
-			{
-				ConnectionString = myConnectionString
-			};
 			string queryString = $"SELECT test_Fname, test_Lname, test_course FROM test_table WHERE test_id = {ID_barcode};";
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
@@ -45,6 +45,10 @@ namespace prototype_Info_Manage
 
 			}
 			return rowList;
+		}
+		string Previlages()
+		{
+			return string.Empty;
 		}
 	}
 }

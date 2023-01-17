@@ -30,10 +30,16 @@ namespace prototype_Info_Manage
 				string Student_barcode = Student_bar.Text;
 				DBTest dB = new();
 				List<string> rowVal = dB.ID_Check(Student_barcode);
-				txtB_studentFName.Text = rowVal[0];
-				txtB_studentLName.Text = rowVal[1];
-				txtB_studentCourse.Text = rowVal[2];
-
+				if (rowVal.Count < 1)
+				{
+					Student_bar.Focus();
+				}
+				else
+				{
+					txtB_studentFName.Text = rowVal[0];
+					txtB_studentLName.Text = rowVal[1];
+					txtB_studentCourse.Text = rowVal[2];
+				}
 				//Debug.WriteLine(rowVal[0]);
 				Student_bar.Text = string.Empty;
 			}
@@ -48,7 +54,10 @@ namespace prototype_Info_Manage
 
 		private void OnClick(object sender, MouseButtonEventArgs e)
 		{
-			MessageBox.Show("Option Has been Clicked");
+			CredentialCheck credentialCheck = new CredentialCheck();
+			credentialCheck.Owner = this;
+			credentialCheck.ShowDialog();
+			//credentialCheck.Show();
 		}
 	}
 }
