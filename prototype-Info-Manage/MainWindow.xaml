@@ -1,0 +1,31 @@
+﻿<Window x:Class="prototype_Info_Manage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:prototype_Info_Manage"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="315">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="155"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="155"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Column="1" Grid.Row="1" x:Name="ID_Image_Here" Source="/Assets/Images/images.jpg" Grid.ColumnSpan="1"/>
+        <TextBox x:Name="Student_bar" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="Example" VerticalAlignment="Center" Width="120" Focusable="True" KeyDown="Student_bar_KeyDown" Grid.Column="1" Grid.Row="5" Height="25" TextAlignment="Center" Margin="18,0,0,0"/>
+        <TextBlock x:Name="txtB_studentFName" TextWrapping="NoWrap" Text="StudenFname" TextAlignment="Center" FontSize="16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock x:Name="txtB_studentLName" TextWrapping="NoWrap" TextAlignment="Center" FontSize="16" Text="Student Lname" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="txtB_studentCourse" TextWrapping="NoWrap" Width="150" Height="20" TextAlignment="Center" FontSize="16" Text="Student Course" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image x:Name="Settings" Source="/Assets/Images/Gear-Option.png" MouseLeftButtonDown="OnClick" Grid.Column="2" Grid.Row="5"/>
+    </Grid>
+</Window>
