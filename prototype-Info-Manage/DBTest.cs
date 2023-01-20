@@ -27,7 +27,7 @@ namespace prototype_Info_Manage
 		public List<string> ID_Check(string ID_barcode)
 		{
 			List<string> rowList = new List<string>();
-			string queryString = $"SELECT FirstName, LastName, ID_Course FROM info_management.id_information WHERE ID_BarCode = {ID_barcode};";
+			string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_infromation WHERE ID_BarCode = {ID_barcode};";
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
 			MySqlDataReader rdr = cmd.ExecuteReader();
