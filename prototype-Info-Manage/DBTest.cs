@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,14 +21,15 @@ namespace prototype_Info_Manage
     {
 		private static readonly Regex _regex = new Regex("[^0-9]+");
 		private const string myConnectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=info_management;";
-		MySqlConnection conn = new()
-		{
-			ConnectionString = myConnectionString
-		};
+
 		public List<string> ID_Check(string ID_barcode)
 		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
 			List<string> rowList = new List<string>();
-			string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_infromation WHERE ID_BarCode = {ID_barcode};";
+			string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_information WHERE ID_BarCode = {ID_barcode};";
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
 			MySqlDataReader rdr = cmd.ExecuteReader();
@@ -44,17 +46,22 @@ namespace prototype_Info_Manage
 					
 				}
 				rdr.Close();
-				conn.Close();
+				
 			}
 			else
 			{
 				MessageBox.Show("No Student with that ID Number!");
 
 			}
+			conn.Close();
 			return rowList;
 		}
 		public string[] Previlages(string Access_Perm)
 		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
 			string[] previlages = new string[2];
 			string queryString = $"SELECT FirstName, AccessLevel FROM access_privileges WHERE ID_BarCode = {Access_Perm};";
 			conn.Open();
@@ -81,6 +88,10 @@ namespace prototype_Info_Manage
 		}
 		public void MySQLinsert(Dashboard_data data)
 		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
 			try
 			{
 				string queryString = $"INSERT INTO `id_information` (`ID_BarCode`, `FirstName`, `MiddleName`, `LastName`, `Age`, `ID_CellContact`, `ID_EmergName`, `ID_EmergContact`) VALUES ('{data.ID_barcode}', '{data.FirstName}', '{data.MiddleName}', '{data.LastName}', '{data.Age}', '{data.StudentCell}', '{data.StuPGname}', '{data.StuPGCell}');";
@@ -141,9 +152,15 @@ namespace prototype_Info_Manage
 			//"FROM id_information WHERE `id_information`.`ID_BarCode` = 000000172381723";
 			return false;
 		}
-		public bool GatePassage(string ID_Value)
+
+		public List<string> GatePassage(string ID_Value)
 		{
-			string queryString = $"SELECT * FROM gate_passage WHERE ID_BarCode = {ID_Value};";
+			List<string> gatepassage =	new List<string>();
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			string queryString = $"SELECT * FROM gate_passage WHERE ID_BarCode = {ID_Value} ORDER by Passage_tracker DESC LIMIT 0,1 ;";
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
 			MySqlDataReader rdr = cmd.ExecuteReader();
@@ -151,26 +168,55 @@ namespace prototype_Info_Manage
 			{
 				if (rdr.IsDBNull(3))
 				{
-					rdr.Close();
-					MySqlCommand cmd2 = new(queryString, conn);
-					MySqlDataReader rdr2 = cmd.ExecuteReader();
-					queryString = $"INSERT INTO `gate_passage` (`Passage_tracker`, `ID_BarCode`, `Passage_Entry`, `Passage_Exit`) VALUES (NULL, '{ID_Value}', '', current_timestamp());";
-					cmd2 = new(queryString, conn);
-					rdr2 = cmd2.ExecuteReader();
-					return true;
-
+					gatepassage.Add("true");
+					gatepassage.Add(rdr.GetString(0));
+					return gatepassage;
 				}
 				else
 				{
-					rdr.Close();
-					queryString = $"INSERT INTO `gate_passage` (`Passage_tracker`, `ID_BarCode`, `Passage_Entry`, `Passage_Exit`) VALUES (NULL, '{ID_Value}', current_timestamp(), NULL);";
-					MySqlCommand cmd2 = new(queryString, conn);
-					MySqlDataReader rdr2 = cmd.ExecuteReader();
-					return false;
+					gatepassage.Add("false");
+					gatepassage.Add(rdr.GetString(0));
+					return gatepassage;
 				}
 			}
-			return false;
 			conn.Close();
+			return gatepassage;
+		}
+		public void GateUpdate(List<string> Value, string ID_Value)
+		{
+
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			if (Value[0] == "true")
+			{
+				MessageBox.Show("TRUE");
+				string queryString = $"UPDATE `gate_passage` SET `Passage_Exit` = current_timestamp() WHERE `gate_passage`.`Passage_tracker` = {Value[1]};";
+				conn.Open();
+				MySqlCommand cmd = new(queryString, conn);
+				MySqlDataReader rdr = cmd.ExecuteReader();
+				while (rdr.Read())
+				{
+
+				}
+				conn.Close();
+
+			}
+			else
+			{
+				MessageBox.Show("False");
+				string queryString = $"INSERT INTO `gate_passage` (`Passage_tracker`, `ID_BarCode`, `Passage_Entry`, `Passage_Exit`) VALUES (NULL, '{ID_Value}', current_timestamp(), NULL);";
+				conn.Open();
+				MySqlCommand cmd = new(queryString, conn);
+				MySqlDataReader rdr = cmd.ExecuteReader();
+				while (rdr.Read())
+				{
+
+				}
+				conn.Close();
+			}
+
 		}
 	}
 }

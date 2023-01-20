@@ -29,16 +29,20 @@ namespace prototype_Info_Manage
 			{
 				string Student_barcode = Student_bar.Text;
 				DBTest dB = new();
+				DBTest db2= new DBTest();
+				DBTest db3= new DBTest();
 				if (dB.NumOnly(Student_barcode))
 				{
-					dB.GatePassage(Student_barcode);
-					List<string> rowVal = dB.ID_Check(Student_barcode);
-
+					List<string> GateBool = dB.GatePassage(Student_barcode);
+					Debug.WriteLine($"GATELIST VAL {GateBool[0]} , {GateBool[1]}");
+					List<string> rowVal = db2.ID_Check(Student_barcode);
 					if (rowVal.Count > 0)
 					{
 						txtB_studentFName.Text = rowVal[0];
 						txtB_studentLName.Text = rowVal[1];
 						txtB_studentCourse.Text = rowVal[2];
+						dB.GateUpdate(GateBool, Student_barcode);
+						//else dB.GateUpdate(GateBool[0], Student_barcode);
 					}
 				}
 				else
