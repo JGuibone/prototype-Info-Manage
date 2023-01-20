@@ -1,4 +1,4 @@
-﻿<Window x:Class="prototype_Info_Manage.CredentialCheck"
+﻿<Window x:Class="prototype_Info_Manage.DB_edit"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Title="CredentialCheck" Height="220" Width="320">
+        Title="DB_edit" Height="220" Width="320">
     <Grid>
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Please Scan Your ID." VerticalAlignment="Top" Height="30" Width="200" FontSize="16" FontWeight="Bold" TextAlignment="Center" Margin="0,46,0,0"/>
         <TextBox x:Name="inpb_Bar" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextAlignment="Center" KeyDown="inpb_Bar_KeyDown"/>

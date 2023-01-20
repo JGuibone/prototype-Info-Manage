@@ -1,0 +1,66 @@
+﻿<Window x:Class="prototype_Info_Manage.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:prototype_Info_Manage"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Dashboard" Height="520" Width="500" MinHeight="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="47*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="Dash_CurrentUser" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="DashFname" VerticalAlignment="Center" Height="25" Width="140" TextAlignment="Center" FontSize="20"/>
+            <TextBlock x:Name="Dash_Current_Rank" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="DashAccessRight" VerticalAlignment="Center" Height="24" Width="140" TextAlignment="Center" FontSize="18"/>
+            <Button Content="Insert New Entry" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" Height="30" Width="140" Click="Dash_Insert"/>
+            <Button Content="Edit an entry" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="30" Width="140" Click="Dash_Edit"/>
+            <Button Content="Delete an entry" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Height="30" Width="140" Click="Dash_Delete"/>
+            <Image x:Name="Dash_StudentImage" Height="160" Width="160" Source="/Assets/Images/file-upload-icon.png" MouseLeftButtonDown="INIT_Upload" Margin="10"/>
+        </Grid>
+        <Label Margin="10,10,0,0" Width="220" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel>
+                <AccessText Text="Student Personal Information"/>
+                <Label HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" Width="200">
+                    <StackPanel Width="180" Margin="2">
+                        <AccessText Text="ID Barcode" Margin="4" FontSize="16"/>
+                        <TextBox x:Name="Dash_IDbar" Width="160" HorizontalAlignment="Left" FontSize="16"></TextBox>
+                        <AccessText Text="Student Course" Margin="4"/>
+                        <TextBox x:Name="Dash_Course" Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="First Name" Margin="4"/>
+                        <TextBox x:Name="Dash_Fname" Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="Middle Name" Margin="4"/>
+                        <TextBox x:Name="Dash_Mname" Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="Last Name" Margin="4"/>
+                        <TextBox  x:Name="Dash_Lname"  Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="Age" Margin="4"/>
+                        <TextBox x:Name="Dash_Age" Width="40" HorizontalAlignment="Left"></TextBox>
+                    </StackPanel>
+                </Label>
+                <AccessText Text="Contact Information"/>
+                <Label>
+                    <StackPanel Width="180" Margin="2">
+                        <AccessText Text="Student Cellphone No." Margin="4"/>
+                        <TextBox x:Name="Dash_StuCelNum" Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="Parent or Guardian's Full Name" Margin="4"/>
+                        <TextBox x:Name="Dash_StuPGName" Width="160" HorizontalAlignment="Left"></TextBox>
+                        <AccessText Text="Parent or Guardian's Cellphone Number" Margin="4" TextWrapping="Wrap"/>
+                        <TextBox x:Name="Dash_StuPGNum" Width="160" HorizontalAlignment="Left"></TextBox>
+                    </StackPanel>
+                </Label>
+            </StackPanel>
+        </Label>
+
+    </Grid>
+</Window>
