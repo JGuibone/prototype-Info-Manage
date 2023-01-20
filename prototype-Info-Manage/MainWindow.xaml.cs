@@ -31,6 +31,7 @@ namespace prototype_Info_Manage
 				DBTest dB = new();
 				if (dB.NumOnly(Student_barcode))
 				{
+					dB.GatePassage(Student_barcode);
 					List<string> rowVal = dB.ID_Check(Student_barcode);
 
 					if (rowVal.Count > 0)

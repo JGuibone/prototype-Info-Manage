@@ -67,7 +67,7 @@ namespace prototype_Info_Manage
 		{
 			string ID_BarCode = Dash_IDbar.Text;
 			DBTest dB = new DBTest();
-			dB.MySQLedit(ID_BarCode);
+			//dB.MySQLedit(ID_BarCode);
 
 
 		}
