@@ -12,15 +12,15 @@ namespace prototype_Info_Manage
 	{
 		private static readonly Regex _regex = new Regex("[^0-9]+");
 
-		
+
 		public string ID_barcode { get; set; }
 		public string? ID_course { get; set; }
-		public string? FirstName { get ; set; }
+		public string? FirstName { get; set; }
 		public string? MiddleName { get; set; }
-		public string? LastName { get; set;}
+		public string? LastName { get; set; }
 		public string Age { get; set; }
 		public string StudentCell { get; set; }
-		public string? StuPGname { get; set;}
+		public string? StuPGname { get; set; }
 		public string StuPGCell { get; set; }
 
 		public bool CheckValue()
@@ -30,6 +30,14 @@ namespace prototype_Info_Manage
 				return false;
 			}
 			else return true;
+		}
+		public bool checkClassIfNull()
+		{
+			if (ID_barcode == null || ID_course == null || FirstName == null || MiddleName == null || LastName == null || Age == null || StudentCell == null || StuPGname == null || StuPGCell == null)
+			{
+				return true;
+			}
+			else return false;
 		}
 	}
 }

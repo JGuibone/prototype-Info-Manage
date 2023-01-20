@@ -22,6 +22,28 @@ namespace prototype_Info_Manage
 		private static readonly Regex _regex = new Regex("[^0-9]+");
 		private const string myConnectionString = "datasource=127.0.0.1;port=3306;username=root;password=;database=info_management;";
 
+		public bool ID_CheckV2(string ID_barcode)
+		{
+			bool onlyNum = !_regex.IsMatch(ID_barcode);
+			bool validID = true;
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_information WHERE ID_BarCode = {ID_barcode};";
+			conn.Open();
+			MySqlCommand cmd = new(queryString, conn);
+			MySqlDataReader rdr = cmd.ExecuteReader();
+			//Debug.WriteLine(rdr.HasRows);
+			if (rdr.HasRows)
+			{
+				validID = true;
+			}
+			else validID = false;
+
+			if (onlyNum && validID) return true;
+			else return false;
+		}
 		public List<string> ID_Check(string ID_barcode)
 		{
 			MySqlConnection conn = new()
@@ -42,6 +64,7 @@ namespace prototype_Info_Manage
 					for (int i = 0; i < numCount; i++)
 					{
 						rowList.Add(rdr.GetString(i));
+						Debug.WriteLine(rdr.GetString(i));
 					}
 					
 				}
@@ -86,7 +109,7 @@ namespace prototype_Info_Manage
 		{
 			return !_regex.IsMatch(CheckInput);
 		}
-		public void MySQLinsert(Dashboard_data data)
+		public void MySQLInsert(Dashboard_data data)
 		{
 			MySqlConnection conn = new()
 			{
@@ -94,7 +117,7 @@ namespace prototype_Info_Manage
 			};
 			try
 			{
-				string queryString = $"INSERT INTO `id_information` (`ID_BarCode`, `FirstName`, `MiddleName`, `LastName`, `Age`, `ID_CellContact`, `ID_EmergName`, `ID_EmergContact`) VALUES ('{data.ID_barcode}', '{data.FirstName}', '{data.MiddleName}', '{data.LastName}', '{data.Age}', '{data.StudentCell}', '{data.StuPGname}', '{data.StuPGCell}');";
+				string queryString = $"INSERT INTO `id_information` (`ID_BarCode`, `ID_Course`, `FirstName`, `MiddleName`, `LastName`, `Age`, `ID_CellContact`, `ID_EmergName`, `ID_EmergContact`) VALUES ('{data.ID_barcode}', '{data.ID_course}', '{data.FirstName}', '{data.MiddleName}', '{data.LastName}', '{data.Age}', '{data.StudentCell}', '{data.StuPGname}', '{data.StuPGCell}');";
 				MySqlCommand comm = new MySqlCommand(queryString, conn);
 				MySqlDataReader rdr;
 				conn.Open();
@@ -112,45 +135,77 @@ namespace prototype_Info_Manage
 				MessageBox.Show(ex.Message);
 			}
 		}
-		//public Dashboard_data MySQLedit(string ID_Value)
-		//{
-		//	Dashboard_data DD = new Dashboard_data();
-		//	string queryString = $"SELECT * FROM `id_information` WHERE ID_BarCode = {ID_Value};";
-		//	conn.Open();
-		//	MySqlCommand cmd = new(queryString, conn);
-		//	MySqlDataReader rdr = cmd.ExecuteReader();
-		//	if (rdr.HasRows)
-		//	{
-		//		//MessageBox.Show($"{rdr.FieldCount}");
-		//		while (rdr.Read())
-		//		{
-		//			DD.ID_barcode = rdr.GetString(0);
-		//			DD.ID_course= rdr.GetString(1);
-		//			DD.FirstName = rdr.GetString(2);
-		//			DD.MiddleName = rdr.GetString(3);
-		//			DD.LastName = rdr.GetString(4);
-		//			DD.Age = rdr.GetString(5);
-		//			DD.StudentCell = rdr.GetString(6);
-		//			DD.StuPGname= rdr.GetString(7);
-		//			DD.StuPGCell= rdr.GetString(8);
-
-		//		}
-		//		rdr.Close();
-				
-		//	}
-		//	else
-		//	{
-		//		MessageBox.Show("No Student with that ID Number!");
-
-		//	}
-		//	conn.Close();
-		//	return DD;
-		//}
-		public bool MySQLdelete(string ID_Value)
+		public Dashboard_data MySQLSearch(string ID_Value)
 		{
-			//string queryString = $"DELETE FROM id_information WHERE `id_information`.`ID_BarCode` = {ID_Value}";
-			//"FROM id_information WHERE `id_information`.`ID_BarCode` = 000000172381723";
-			return false;
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			Dashboard_data DD = new Dashboard_data();
+			string queryString = $"SELECT * FROM `id_information` WHERE ID_BarCode = {ID_Value};";
+			conn.Open();
+			MySqlCommand cmd = new(queryString, conn);
+			MySqlDataReader rdr = cmd.ExecuteReader();
+			if (rdr.HasRows)
+			{
+				//MessageBox.Show($"{rdr.FieldCount}");
+				while (rdr.Read())
+				{
+					DD.ID_barcode = rdr.GetString(0);
+					DD.ID_course = rdr.GetString(1);
+					DD.FirstName = rdr.GetString(2);
+					DD.MiddleName = rdr.GetString(3);
+					DD.LastName = rdr.GetString(4);
+					DD.Age = rdr.GetString(5);
+					DD.StudentCell = rdr.GetString(6);
+					DD.StuPGname = rdr.GetString(7);
+					DD.StuPGCell = rdr.GetString(8);
+
+				}
+				rdr.Close();
+
+			}
+			else
+			{
+				MessageBox.Show("No Student with that ID Number!");
+
+			}
+			conn.Close();
+			return DD;
+		}
+		public void MySQLEdit(Dashboard_data DD)
+		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			string queryString = $"UPDATE `id_information` SET `ID_Course` = '{DD.ID_course}', `FirstName` = '{DD.FirstName}', `MiddleName` = '{DD.MiddleName}', `LastName` = '{DD.LastName}', `Age` = '{DD.Age}', `ID_CellContact` = '{DD.StudentCell}', `ID_EmergName` = '{DD.StuPGname}', `ID_EmergContact` = '{DD.StuPGCell}' WHERE `id_information`.`ID_BarCode` = {DD.ID_barcode};";
+			conn.Open();
+			MySqlCommand cmd = new(queryString, conn);
+			MySqlDataReader rdr = cmd.ExecuteReader();
+			while (rdr.Read())
+			{
+
+			}
+			conn.Close();
+			MessageBox.Show("Student Information Has been Updated.");
+		}
+		public void MySQLDelete(string ID_Value)
+		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			string queryString = $"DELETE FROM id_informatioN WHERE ID_BarCode = {ID_Value};";
+			conn.Open();
+			MySqlCommand cmd = new(queryString, conn);
+			MySqlDataReader rdr = cmd.ExecuteReader();
+			while (rdr.Read())
+			{
+
+			}
+			conn.Close();
+			MessageBox.Show("Student Information Has been DELETED.");
 		}
 
 		public List<string> GatePassage(string ID_Value)
@@ -164,6 +219,10 @@ namespace prototype_Info_Manage
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
 			MySqlDataReader rdr = cmd.ExecuteReader();
+			if (!rdr.HasRows)
+			{
+
+			}
 			while (rdr.Read())
 			{
 				if (rdr.IsDBNull(3))
@@ -191,7 +250,7 @@ namespace prototype_Info_Manage
 			};
 			if (Value[0] == "true")
 			{
-				MessageBox.Show("TRUE");
+				//MessageBox.Show("TRUE");
 				string queryString = $"UPDATE `gate_passage` SET `Passage_Exit` = current_timestamp() WHERE `gate_passage`.`Passage_tracker` = {Value[1]};";
 				conn.Open();
 				MySqlCommand cmd = new(queryString, conn);
@@ -205,7 +264,7 @@ namespace prototype_Info_Manage
 			}
 			else
 			{
-				MessageBox.Show("False");
+				//MessageBox.Show("False");
 				string queryString = $"INSERT INTO `gate_passage` (`Passage_tracker`, `ID_BarCode`, `Passage_Entry`, `Passage_Exit`) VALUES (NULL, '{ID_Value}', current_timestamp(), NULL);";
 				conn.Open();
 				MySqlCommand cmd = new(queryString, conn);
