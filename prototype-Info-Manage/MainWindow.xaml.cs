@@ -25,7 +25,7 @@ namespace prototype_Info_Manage
 				DBTest dB = new();
 				if (dB.ID_CheckV2(Student_barcode))
 				{
-					List<string> rowVal = dB.ID_Check(Student_barcode);
+					List<string> rowVal = dB.Gate_Display(Student_barcode);
 					List<string> GateBool = dB.GatePassage(Student_barcode);
 					Debug.WriteLine($"GATELIST VAL {GateBool[0]} , {GateBool[1]}");
 

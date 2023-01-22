@@ -100,15 +100,6 @@ namespace prototype_Info_Manage
 				if (MessageBox.Show("Are you sure you want to delete this students information?", "Confirmation!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
 				{
 					dB.MySQLDelete(saveIDBAR);
-					//Dash_IDbar.Text = string.Empty;
-					//Dash_Course.Text = string.Empty;
-					//Dash_Fname.Text = string.Empty;
-					//Dash_Mname.Text = string.Empty;
-					//Dash_Lname.Text = string.Empty;
-					//Dash_Age.Text = string.Empty;
-					//Dash_StuCelNum.Text = string.Empty;
-					//Dash_StuPGName.Text = string.Empty;
-					//Dash_StuPGNum.Text = string.Empty;
 				}
 				else
 				{
@@ -128,33 +119,41 @@ namespace prototype_Info_Manage
 
 		private void Dash_bar_KeyEnter(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Return)
+			if (e.Key == Key.Return && Dash_IDbar.Text != string.Empty)
 			{
 				string ID_BarCode = Dash_IDbar.Text;
 				DBTest dB = new DBTest();
 				Dashboard_data DD = new Dashboard_data();
-
+				Dash_Stu_IDnum.Text = ID_BarCode;
 				//Debug.WriteLine(ID_BarCode);
 				//Debug.WriteLine(dB.ID_CheckV2(ID_BarCode));
-				if (dB.ID_CheckV2(ID_BarCode))
+				if (dB.ID_CheckV2(ID_BarCode) && DD.checkClassIfNull())
 				{
-					if (DD.checkClassIfNull())
-					{
-						DD = dB.MySQLSearch(ID_BarCode);
-						Dash_IDbar.Text = DD.ID_barcode;
-						Dash_Course.Text = DD.ID_course;
-						Dash_Fname.Text = DD.FirstName;
-						Dash_Mname.Text = DD.MiddleName;
-						Dash_Lname.Text = DD.LastName;
-						Dash_Age.Text = DD.Age;
-						Dash_StuCelNum.Text = DD.StudentCell;
-						Dash_StuPGName.Text = DD.StuPGname;
-						Dash_StuPGNum.Text = DD.StuPGCell;
-					}
+					
+					DD = dB.MySQLSearch(ID_BarCode);
+					Dash_Course.Text = DD.ID_course;
+					Dash_Fname.Text = DD.FirstName;
+					Dash_Mname.Text = DD.MiddleName;
+					Dash_Lname.Text = DD.LastName;
+					Dash_Age.Text = DD.Age;
+					Dash_StuCelNum.Text = DD.StudentCell;
+					Dash_StuPGName.Text = DD.StuPGname;
+					Dash_StuPGNum.Text = DD.StuPGCell;
+					Dash_IDbar.Text = string.Empty;
+
 				}
 				else
 				{
 					MessageBox.Show("Only Valid ID NUMBER is allowed.");
+					Dash_IDbar.Text = string.Empty;
+					Dash_Course.Text = string.Empty;
+					Dash_Fname.Text = string.Empty;
+					Dash_Mname.Text = string.Empty;
+					Dash_Lname.Text = string.Empty;
+					Dash_Age.Text = string.Empty;
+					Dash_StuCelNum.Text = string.Empty;
+					Dash_StuPGName.Text = string.Empty;
+					Dash_StuPGNum.Text = string.Empty;
 				}
 			}
 		}

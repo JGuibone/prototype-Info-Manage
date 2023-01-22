@@ -28,14 +28,16 @@
             <Button Content="Edit an entry" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="30" Width="140" Click="Dash_Edit"/>
             <Button Content="Delete an entry" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Height="30" Width="140" Click="Dash_Delete"/>
             <Image x:Name="Dash_StudentImage" Height="160" Width="160" Source="/Assets/Images/file-upload-icon.png" MouseLeftButtonDown="INIT_Upload" Margin="10"/>
+            <TextBox x:Name="Dash_IDbar" Width="180" HorizontalAlignment="Center" FontSize="16" KeyDown="Dash_bar_KeyEnter" Margin="0,20,0,10" Grid.Row="6"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Grid.RowSpan="2" Width="130" Height="15"><Run Text="Search For Students"/><LineBreak/><Run/></TextBlock>
         </Grid>
         <Label Margin="10,10,0,0" Width="220" HorizontalAlignment="Left" VerticalAlignment="Top">
             <StackPanel>
                 <AccessText Text="Student Personal Information"/>
                 <Label HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" Width="200">
                     <StackPanel Width="180" Margin="2">
-                        <AccessText Text="ID Barcode" Margin="4" FontSize="16"/>
-                        <TextBox x:Name="Dash_IDbar" Width="160" HorizontalAlignment="Left" FontSize="16" KeyDown="Dash_bar_KeyEnter"></TextBox>
+                        <AccessText Text="Student ID Number" Margin="4" FontSize="16"/>
+                        <TextBlock x:Name="Dash_Stu_IDnum" Text="Student ID" Margin="4"/>
                         <AccessText Text="Student Course" Margin="4"/>
                         <TextBox x:Name="Dash_Course" Width="160" HorizontalAlignment="Left"></TextBox>
                         <AccessText Text="First Name" Margin="4"/>

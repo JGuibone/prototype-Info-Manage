@@ -25,26 +25,29 @@ namespace prototype_Info_Manage
 		public bool ID_CheckV2(string ID_barcode)
 		{
 			bool onlyNum = !_regex.IsMatch(ID_barcode);
+			Debug.WriteLine(onlyNum);
 			bool validID = true;
-			MySqlConnection conn = new()
+			if (onlyNum && ID_barcode != "")
 			{
-				ConnectionString = myConnectionString
-			};
-			string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_information WHERE ID_BarCode = {ID_barcode};";
-			conn.Open();
-			MySqlCommand cmd = new(queryString, conn);
-			MySqlDataReader rdr = cmd.ExecuteReader();
-			//Debug.WriteLine(rdr.HasRows);
-			if (rdr.HasRows)
-			{
-				validID = true;
+				
+				MySqlConnection conn = new()
+				{
+					ConnectionString = myConnectionString
+				};
+				string queryString = $"SELECT FirstName, LastName, ID_Course FROM id_information WHERE ID_BarCode = {ID_barcode};";
+				conn.Open();
+				MySqlCommand cmd = new(queryString, conn);
+				MySqlDataReader rdr = cmd.ExecuteReader();
+				if (rdr.HasRows)
+				{
+					validID = true;
+				}
+				else validID = false;
 			}
-			else validID = false;
-
 			if (onlyNum && validID) return true;
 			else return false;
 		}
-		public List<string> ID_Check(string ID_barcode)
+		public List<string> Gate_Display(string ID_barcode)
 		{
 			MySqlConnection conn = new()
 			{
