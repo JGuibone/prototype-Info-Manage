@@ -27,7 +27,7 @@ namespace prototype_Info_Manage
 				{
 					List<string> rowVal = dB.Gate_Display(Student_barcode);
 					List<string> GateBool = dB.GatePassage(Student_barcode);
-					Debug.WriteLine($"GATELIST VAL {GateBool[0]} , {GateBool[1]}");
+					//Debug.WriteLine($"GATELIST VAL {GateBool[0]} , {GateBool[1]}");
 
 					if (rowVal.Count > 0)
 					{

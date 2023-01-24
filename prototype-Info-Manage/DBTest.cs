@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media.Media3D;
 using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
@@ -213,7 +214,7 @@ namespace prototype_Info_Manage
 
 		public List<string> GatePassage(string ID_Value)
 		{
-			List<string> gatepassage =	new List<string>();
+			List<string> gatepassage = new List<string>();
 			MySqlConnection conn = new()
 			{
 				ConnectionString = myConnectionString
@@ -222,31 +223,60 @@ namespace prototype_Info_Manage
 			conn.Open();
 			MySqlCommand cmd = new(queryString, conn);
 			MySqlDataReader rdr = cmd.ExecuteReader();
-			if (!rdr.HasRows)
-			{
 
-			}
-			while (rdr.Read())
+			if (rdr.HasRows)
 			{
-				if (rdr.IsDBNull(3))
+				while (rdr.Read())
 				{
-					gatepassage.Add("true");
-					gatepassage.Add(rdr.GetString(0));
-					return gatepassage;
-				}
-				else
-				{
-					gatepassage.Add("false");
-					gatepassage.Add(rdr.GetString(0));
-					return gatepassage;
+					if (rdr.IsDBNull(3))
+					{
+						gatepassage.Add("true");
+						gatepassage.Add(rdr.GetString(0));
+						return gatepassage;
+					}
+					else
+					{
+						gatepassage.Add("false");
+						gatepassage.Add(rdr.GetString(0));
+						return gatepassage;
+					}
 				}
 			}
+			else
+			{
+				GateInsert(ID_Value);
+			}
+			
 			conn.Close();
 			return gatepassage;
 		}
+
+		public void GateInsert(string ID_Value)
+		{
+			MySqlConnection conn = new()
+			{
+				ConnectionString = myConnectionString
+			};
+			try
+			{
+				string queryString = $"INSERT INTO `gate_passage` (`Passage_tracker`, `ID_BarCode`, `Passage_Entry`, `Passage_Exit`) VALUES (NULL, '{ID_Value}', current_timestamp(), NULL)";
+				MySqlCommand comm = new MySqlCommand(queryString, conn);
+				MySqlDataReader rdr;
+				conn.Open();
+				rdr = comm.ExecuteReader();
+				//MessageBox.Show("saving.");
+				while (rdr.Read())
+				{
+				}
+				conn.Close();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
 		public void GateUpdate(List<string> Value, string ID_Value)
 		{
-
 			MySqlConnection conn = new()
 			{
 				ConnectionString = myConnectionString
@@ -260,10 +290,8 @@ namespace prototype_Info_Manage
 				MySqlDataReader rdr = cmd.ExecuteReader();
 				while (rdr.Read())
 				{
-
 				}
 				conn.Close();
-
 			}
 			else
 			{
@@ -274,7 +302,6 @@ namespace prototype_Info_Manage
 				MySqlDataReader rdr = cmd.ExecuteReader();
 				while (rdr.Read())
 				{
-
 				}
 				conn.Close();
 			}

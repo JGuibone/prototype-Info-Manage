@@ -47,7 +47,7 @@ namespace prototype_Info_Manage
 			Dashboard_data DD = new Dashboard_data();
 			DBTest dB= new DBTest();
 
-			DD.ID_barcode = Dash_IDbar.Text;
+			DD.ID_barcode = Dash_Stu_IDnum.Text;
 			DD.ID_course = Dash_Course.Text;
 			DD.FirstName = Dash_Fname.Text;
 			DD.MiddleName = Dash_Mname.Text;
@@ -61,20 +61,25 @@ namespace prototype_Info_Manage
 			{
 				dB.MySQLInsert(DD);
 			}
-			else MessageBox.Show("Please Double check your entry. (ID Barcode, Age and cellphone numbers MUST be numbers.");
+			else 
+			{
+				MessageBox.Show("Please Double check your entry. (ID Barcode, Age and cellphone numbers MUST be numbers.");
+				Dash_IDbar.Focus();
+			} 
+
 		}
 
 		private void Dash_Edit(object sender, RoutedEventArgs e)
 		{
 			DBTest dB= new DBTest();
 			Dashboard_data DD = new Dashboard_data();
-			if (Dash_IDbar.Text == null || Dash_Course.Text == null || Dash_Fname.Text == null || Dash_Mname.Text == null || Dash_Lname.Text == null || Dash_Age.Text == null || Dash_StuCelNum.Text == null || Dash_StuPGName.Text == null || Dash_StuPGNum.Text == null)
+			if (Dash_Stu_IDnum.Text == null || Dash_Course.Text == null || Dash_Fname.Text == null || Dash_Mname.Text == null || Dash_Lname.Text == null || Dash_Age.Text == null || Dash_StuCelNum.Text == null || Dash_StuPGName.Text == null || Dash_StuPGNum.Text == null)
 			{
 				MessageBox.Show("Please Double check your inputs.");
 			}
 			else
 			{
-				DD.ID_barcode = Dash_IDbar.Text;
+				DD.ID_barcode = Dash_Stu_IDnum.Text;
 				DD.ID_course = Dash_Course.Text;
 				DD.FirstName = Dash_Fname.Text;
 				DD.MiddleName = Dash_Mname.Text;
@@ -91,7 +96,7 @@ namespace prototype_Info_Manage
 		{
 			DBTest dB = new DBTest();
 			string saveIDBAR = Dash_IDbar.Text;
-			if (Dash_IDbar.Text == null || Dash_Course.Text == null || Dash_Fname.Text == null || Dash_Mname.Text == null || Dash_Lname.Text == null || Dash_Age.Text == null || Dash_StuCelNum.Text == null || Dash_StuPGName.Text == null || Dash_StuPGNum.Text == null)
+			if (Dash_Stu_IDnum.Text == null || Dash_Course.Text == null || Dash_Fname.Text == null || Dash_Mname.Text == null || Dash_Lname.Text == null || Dash_Age.Text == null || Dash_StuCelNum.Text == null || Dash_StuPGName.Text == null || Dash_StuPGNum.Text == null)
 			{
 				MessageBox.Show("Please Double check your inputs.");
 			}
@@ -103,7 +108,7 @@ namespace prototype_Info_Manage
 				}
 				else
 				{
-					Dash_IDbar.Text=string.Empty;
+					Dash_Stu_IDnum.Text=string.Empty;
 					Dash_Course.Text = string.Empty;
 					Dash_Fname.Text = string.Empty;
 					Dash_Mname.Text = string.Empty;
